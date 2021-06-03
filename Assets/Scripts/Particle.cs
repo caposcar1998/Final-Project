@@ -14,8 +14,8 @@ public class Particle : MonoBehaviour
     public Vector3 airForce;
     public float restitution;
     public Vector3 color;
+    public float wind;
 
-    
     // Start is called before the first frame update
     void Start(){
     }
@@ -58,13 +58,15 @@ public class Particle : MonoBehaviour
 
     // }
 
-    void CheckFloor(){
-        if (currPos.y < -10+r){ //Floor
-            prevPos.y = currPos.y;
-            currPos.y = -10+r;
-            f.y = -f.y * restitution;
-            a = f / m;
-        }  
+    void CheckFloor()
+    {
+        if (currPos.y < 0.000001f)
+        {
+            currPos.y = 0;
+            currPos.x = prevPos.x;
+            currPos.z = prevPos.z;
+            f = -f * restitution;
+        }
     }
 
     // void CheckBackFront(){ //Check in z
@@ -93,7 +95,8 @@ public class Particle : MonoBehaviour
             f.y = 0;
         }else{
             f.y = -m * g;
-            if(currPos.y != prevPos.y){
+            f.x = -m * wind;
+            if (currPos.y != prevPos.y){
                 Vector3 vel = (currPos - prevPos) / Time.deltaTime;
                 if(currPos.y > prevPos.y){
                     f.y = f.y - r * 0.001f * vel.magnitude;

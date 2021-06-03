@@ -22,9 +22,9 @@ public class Emitter : MonoBehaviour
             part.transform.localScale = new Vector3(diam, diam, diam);
 
             // + Each particle will have a random material color.
-            Vector3 materialColors = new Vector3(Random.Range(0.2f, 0.7f), /* - The red diffuse channel in the range [0.2, 0.7] */
-                                                Random.Range(0.2f, 1.0f), /* - The green diffuse channel in the range [0.2, 1.0] */
-                                                Random.Range(0.2f, 1.0f)); /* - The blue diffuse channel in the range [0.2, 1.0] */
+            Vector3 materialColors = new Vector3(0, /* - The red diffuse channel in the range [0.2, 0.7] */
+                                                0, /* - The green diffuse channel in the range [0.2, 1.0] */
+                                                204); /* - The blue diffuse channel in the range [0.2, 1.0] */
             Color c = new Color(materialColors.x,materialColors.y, materialColors.z);
             Renderer rend = part.GetComponent<Renderer>();
             rend.material.SetColor("_Color", c);
@@ -39,7 +39,10 @@ public class Emitter : MonoBehaviour
             pScript.f = Vector3.zero;
             pScript.f.y = -pScript.m * pScript.g;
             // + The particles will explode from the emitter at(0,0, 0) with random forces in ±X ±Y and±Z.
-            pScript.currPos = new Vector3(0,15,0); //
+            pScript.currPos = new Vector3(
+                Random.Range(1, 10)
+                ,15
+                ,Random.Range(1, 10)); //
             pScript.f.x += Random.Range(-1.5f, 1.5f);
             pScript.f.y += Random.Range(-1.5f, 1.5f);
             pScript.f.z += Random.Range(-1.5f, 1.5f);
@@ -63,10 +66,10 @@ public class Emitter : MonoBehaviour
                         //Change p1 to RED
                         crashed = true;
                         Renderer rend = p1.GetComponent<Renderer>();
-                        rend.material.SetColor("_Color", Color.red);
+                        rend.material.SetColor("_Color", Color.blue);
                         //Change p2 to RED
                         rend = p2.GetComponent<Renderer>();
-                        rend.material.SetColor("_Color", Color.red);
+                        rend.material.SetColor("_Color", Color.blue);
                         //Debug.Log("Collision PUM: " + i.ToString() + " vs " + j.ToString());
                     }
                 }
