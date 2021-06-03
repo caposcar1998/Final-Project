@@ -41,7 +41,7 @@ public class Blade : MonoBehaviour
     Vector3[] TransformWindmill(Vector3[] input)
     {
         Vector3[] output = new Vector3[input.Length];
-        Matrix4x4 t = Transformations.TranslateM(0, 0.4f, 0);
+        Matrix4x4 t = Transformations.TranslateM(0, 0.8f, 0);
 
         for (int i = 0; i < input.Length; i++)
         {
