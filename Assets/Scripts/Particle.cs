@@ -16,109 +16,114 @@ public class Particle : MonoBehaviour
     public Vector3 color;
     public float wind;
 
+    public float bladesWind;
+
+    public bool hasStoped;
+
+    private bool hasBounce = false;
+
+    private bool isPaused = false;
+
     // Start is called before the first frame update
     void Start(){
     }
 
-    /* When particles collide against a wall of the imaginarycube, they will
-    bounce in thedirection of the reflected ray around the cube’s wall internal normal vector 
-    (the normalpointing inside the cube).
-
-    */
-    // void CheckWalls(){ //Check in x
-    //     if(currPos.x > 10-r){ //Right Wall
-    //         prevPos.x = currPos.x;
-    //         currPos.x = 10f-r;
-    //         f.x = -f.x * restitution;
-    //         a = f / m;
-    //     }
-
-    //     if(currPos.x < -10+r){ //Left Wall
-    //         prevPos.x = currPos.x;
-    //         currPos.x = -10+r;
-    //         f.x = -f.x * restitution;
-    //         a = f / m;
-    //     }
-    // }
-
-    // void CheckFloorCeil(){ //Check in y
-    //     if(currPos.y > 10-r){ //Ceil
-    //         prevPos.y = currPos.y;
-    //         currPos.y = 10-r;
-    //         f.y = -f.y * restitution;
-    //         a = f / m;
-    //     }
-
-    //     if (currPos.y < -10+r){ //Floor
-    //         prevPos.y = currPos.y;
-    //         currPos.y = -10+r;
-    //         f.y = -f.y * restitution;
-    //         a = f / m;
-    //     }    
-
-    // }
-
     void CheckFloor()
     {
-        if (currPos.y < 0.000001f)
+        if (currPos.y < r)
         {
-            currPos.y = 0;
-            currPos.x = prevPos.x;
-            currPos.z = prevPos.z;
-            f = -f * restitution;
+            prevPos.y = currPos.y;
+            currPos.y = r ;
+            f.y = -f.y * restitution;
+            a = f / m;
+            hasBounce = true;
+            //Esto quiere decir que toca el suelo, por lo tanto hay rebote ajua    
+        }
+        
+    }
+
+    void CheckOneBounce(){
+        /*Si se registra el mini bounce, pues está con madre esto huerco*/
+        if (currPos.y >= r+1.0f){
+            hasStoped = true;
+            hasBounce = false;
+            
+        }
+        /*Si no registra el primer bounce, eliminar pq se fue a la verga*/
+        if(currPos.x < -40.0f){
+            hasStoped = true;
+            hasBounce = false;
         }
     }
 
-    // void CheckBackFront(){ //Check in z
-    //     if(currPos.z > 10-r){ //Front
-    //         prevPos.z = currPos.z;
-    //         currPos.z = 10-r;
-    //         f.z = -f.z * restitution;
-    //         a = f / m;
-    //         //Debug.Log("Ceil?");
-    //     }
 
-    //     if (currPos.z < -10+r){ //Back
-    //         prevPos.z = currPos.z;
-    //         currPos.z = -10+r;
-    //         f.z = -f.z * restitution;
-    //         a = f / m;
-    //     }
+    void CheckOnWindMill(){
+        //Esas medidas raras son las medidas del molino, pero solo del molino aprox
+        //Mi idea era que cuando estuviera menor a sus medidas, se sabía
+        //que en ese momento se encontraba con el molino, pero valió pura barriga señor verga.
+        if(currPos.x < 3.199815f+r && currPos.z < 3.501239f+r && currPos.y < 6.929605f+r){
+            prevPos.y = currPos.y;
+            currPos.y = 6.929605f+r;
+            f.y = -f.y * restitution;
+            
+            prevPos.x = currPos.x;
+            currPos.x = 3.199815f+r;
+            f.x = -f.x * restitution;
+            
+            prevPos.z = currPos.z;
+            currPos.z = 3.501239f+r;
+            f.z = -f.z * restitution;
+            a = f / m;
+        }
 
-    // }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(Mathf.Abs(currPos.y - prevPos.y) < 0.00001f && Mathf.Abs(currPos.y - r) < 0.00001f){
-            currPos.y = r;
-            prevPos.y = r;
-            f.y = 0;
-        }else{
-            f.y = -m * g;
-            f.x = -m * wind;
-            if (currPos.y != prevPos.y){
-                Vector3 vel = (currPos - prevPos) / Time.deltaTime;
-                if(currPos.y > prevPos.y){
-                    f.y = f.y - r * 0.001f * vel.magnitude;
-                }else if (currPos.y < prevPos.y){
-                    f.y = f.y + r * 0.001f * vel.magnitude;
+        if(!isPaused){
+            if(Mathf.Abs(currPos.y - prevPos.y) < 0.00001f && Mathf.Abs(currPos.y - r) < 0.00001f){
+                currPos.y = r;
+                prevPos.y = r;
+                f.y = 0;
+            }else{
+                f.y = -m * g;
+                f.x = -m * 2.5f; //Wind from the ambiente
+                if (currPos.y != prevPos.y){
+                    Vector3 vel = (currPos - prevPos) / Time.deltaTime;
+                    if(currPos.y > prevPos.y){
+                        f.y = f.y - r * 0.001f * vel.magnitude;
+                    }else if (currPos.y < prevPos.y){
+                        f.y = f.y + r * 0.001f * vel.magnitude;
+                    }
                 }
             }
-        }
-        a = f/m;
-        Vector3 temp = currPos;
-        float dt = Time.deltaTime;
-        if(Time.frameCount > 100){
-            // +Particles will be simulated using Verlet's integration technique
-            currPos = 2 * currPos - prevPos + a * dt * dt; //Verlets
-            prevPos = temp;
-            // CheckWalls();
-            // CheckFloorCeil();
-            // CheckBackFront();
-            CheckFloor();
+            a = f/m;
+            Vector3 temp = currPos;
+            float dt = Time.deltaTime;
+            if(Time.frameCount > 100){
+                currPos = 2 * currPos - prevPos + a * dt * dt; //Verlets
+                prevPos = temp;
+                CheckFloor();
+                //CheckOnWindMill();
+                if(hasBounce){
+                    //Solo si se registra que la partícula haya tocado el suelo y rebotado
+                    CheckOneBounce();
+                }
+            }
 
+            transform.localPosition = currPos;
         }
-        transform.localPosition = currPos;
+
+        
+        if(Input.GetKeyDown("r")){
+            if(isPaused){
+                isPaused = false;
+            }else{
+                isPaused = true;
+            }
+        }
+        
     }
 
     public bool InCollision(Particle antoher){
@@ -132,6 +137,5 @@ public class Particle : MonoBehaviour
         float d2 = dx * dx + dy * dy + dz * dz;
         return d2 < sumR2;
     }
-
 
 }

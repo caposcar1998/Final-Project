@@ -89,7 +89,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373904615756241545}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -116,4 +116,6 @@ MonoBehaviour:
   airForce: {x: 0, y: 0, z: 0}
   restitution: 0
   color: {x: 0, y: 0, z: 0}
-  wind: 5
+  wind: 2
+  bladesWind: 0
+  hasStoped: 0

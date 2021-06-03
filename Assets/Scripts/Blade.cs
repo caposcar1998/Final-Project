@@ -12,12 +12,14 @@ Manuel Ortiz Hernández
 public class Blade : MonoBehaviour
 {
     float angleZ = 0;
-    float dz = 0.3f;
+    float dz = 4.5f;
     Vector3[] originalPoints;
     Vector3[] originalPoints2;
     Vector3[] originalPoints3;
     Vector3[] originalPoints4;
     Vector3[] originalPoints5;
+
+    bool isPaused = false;
 
     Vector3[] TransformBlade(Vector3[] input, Matrix4x4 r)
     {
@@ -82,29 +84,38 @@ public class Blade : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        angleZ += dz;
+        
+        if(!isPaused){
+            angleZ += dz;
+            GameObject bladeOne = GameObject.Find("default1");
+            MeshFilter mf = bladeOne.GetComponent<MeshFilter>();
+            Matrix4x4 r = Transformations.RotateM(angleZ, Transformations.AXIS.AX_Z);
+            mf.mesh.vertices = TransformBlade(originalPoints, r);
 
-        //if(Input.GetKeyDown("space"))
-        //{
-        GameObject bladeOne = GameObject.Find("default1");
-        MeshFilter mf = bladeOne.GetComponent<MeshFilter>();
-        Matrix4x4 r = Transformations.RotateM(angleZ, Transformations.AXIS.AX_Z);
-        mf.mesh.vertices = TransformBlade(originalPoints, r);
+            GameObject bladeTwo = GameObject.Find("default2");
+            MeshFilter mf2 = bladeTwo.GetComponent<MeshFilter>();
+            Matrix4x4 r2 = Transformations.RotateM(angleZ - 90.0f, Transformations.AXIS.AX_Z);
+            mf2.mesh.vertices = TransformBlade(originalPoints2, r2);
 
-        GameObject bladeTwo = GameObject.Find("default2");
-        MeshFilter mf2 = bladeTwo.GetComponent<MeshFilter>();
-        Matrix4x4 r2 = Transformations.RotateM(angleZ - 90.0f, Transformations.AXIS.AX_Z);
-        mf2.mesh.vertices = TransformBlade(originalPoints2, r2);
+            GameObject bladeThree = GameObject.Find("default3");
+            MeshFilter mf3 = bladeThree.GetComponent<MeshFilter>();
+            Matrix4x4 r3 = Transformations.RotateM(angleZ - 180.0f, Transformations.AXIS.AX_Z);
+            mf3.mesh.vertices = TransformBlade(originalPoints3, r3);
 
-        GameObject bladeThree = GameObject.Find("default3");
-        MeshFilter mf3 = bladeThree.GetComponent<MeshFilter>();
-        Matrix4x4 r3 = Transformations.RotateM(angleZ - 180.0f, Transformations.AXIS.AX_Z);
-        mf3.mesh.vertices = TransformBlade(originalPoints3, r3);
+            GameObject bladeFour = GameObject.Find("default4");
+            MeshFilter mf4 = bladeFour.GetComponent<MeshFilter>();
+            Matrix4x4 r4 = Transformations.RotateM(angleZ - 270.0f, Transformations.AXIS.AX_Z);
+            mf4.mesh.vertices = TransformBlade(originalPoints4, r4);
+        }
 
-        GameObject bladeFour = GameObject.Find("default4");
-        MeshFilter mf4 = bladeFour.GetComponent<MeshFilter>();
-        Matrix4x4 r4 = Transformations.RotateM(angleZ - 270.0f, Transformations.AXIS.AX_Z);
-        mf4.mesh.vertices = TransformBlade(originalPoints4, r4);
+        if(Input.GetKeyDown("space")){
+            if(isPaused){
+                isPaused = false;
+            }else{
+                isPaused = true;
+            }
+        }
+
 
         //}
     }
