@@ -14,7 +14,7 @@ public class Particle : MonoBehaviour
     public Vector3 airForce;
     public float restitution;
     public Vector3 color;
-    public float wind;
+    public float ambientWind;
 
     
 
@@ -26,8 +26,7 @@ public class Particle : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
-
-        
+        ambientWind = 2.5f;
     }
 
     void CheckFloor()
@@ -45,13 +44,14 @@ public class Particle : MonoBehaviour
     }
 
     void CheckOneBounce(){
-        /*Si se registra el mini bounce, pues está con madre esto huerco*/
+        //Después de un "pequeño" salto, queremos que se recicle
         if (currPos.y >= r+1.0f){
             hasStoped = true;
             hasBounce = false;
             
         }
-        /*Si no registra el primer bounce, eliminar pq se fue a la verga*/
+        //Esto hay que tratar de evitarlo
+        //Si no se registra el salto, lo validamos conforme a la distancia que tenga en x
         if(currPos.x < -40.0f){
             hasStoped = true;
             hasBounce = false;
@@ -59,13 +59,20 @@ public class Particle : MonoBehaviour
     }
 
     void GoneByTheWind(float windForce){
+        //La windForce es 0.0f cuando se pare la animación de la rotación del molino
         if(windForce > 0.0f){
+            //Si la windForce es > 0.0f, quiere decir que tiene un valor porque el molino se mueve
             if((currPos.x >= -4.0f && currPos.x <= 4.0f) && 
                 (currPos.z >= 2.0f && currPos.z <= 8.0f) &&
-                (currPos.y < 10.0f && currPos.y > 1.5f)){                
-                f.z = -m * -windForce;  //Wind from the windmill blends
-                f.y = -m * windForce+10.0f;
-            
+                (currPos.y < 10f && currPos.y > 1.4f)){ 
+                //Estos son meramente rangos en los que tenemos establecidos las aspas
+                // en el eje x: está seteado en el origen +- las medidas de las aspas = 4.0f aprox
+                // en el eje y: está seteado en 5.5 aprox +- las medidas de las aspas = 4.0f aprox
+                // en el eje z: está seteado a partir de 2.8 aprox, el rango solo es un aproximado de hasta donde atacaría el viento del molino
+                f.z = -m * -windForce;  //La fuerza en z+, es decir, hacia enfrente del molino
+                // f.y = -m * windForce+10.0f; //La fuerza en y-, es decir, va bajando con más fuerza
+                f.x = -m * ambientWind-1.0f; //La fuerza normal que tiene el ambiente, pero reducido.
+
             }
         }
     }
@@ -83,7 +90,7 @@ public class Particle : MonoBehaviour
                 f.y = 0;
             }else{
                 f.y = -m * g;
-                f.x = -m * 2.5f; //Wind from the ambiente
+                f.x = -m * ambientWind; //Wind from the ambiente
                 GoneByTheWind(Blade.windForce);
                 if (currPos.y != prevPos.y){
                     Vector3 vel = (currPos - prevPos) / Time.deltaTime;

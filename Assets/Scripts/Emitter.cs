@@ -55,7 +55,7 @@ public class Emitter : MonoBehaviour
         //En el update, nos fijamos que la bandera hasStoped sea true (osea que choque con el suelo y
         // rebote una vez)
         //Si es el caso, "reciclamos" esa particula y la seteamos
-        //de nuevo en el cielito, donde Diosito anda fumando de la santa.
+        //en su posición inicial donde se generan las particulas
         
         foreach(GameObject p in particles){
             Particle pScript = p.GetComponent<Particle>();
