@@ -60,13 +60,12 @@ public class Particle : MonoBehaviour
 
     void GoneByTheWind(float windForce){
         if(windForce > 0.0f){
-            if((currPos.x >= -3.5f && currPos.x <= 3.5f) && 
-                (currPos.z >= 2.9f && currPos.z <= 10.0f) &&
-                currPos.y < 10.5f){                
+            if((currPos.x >= -4.0f && currPos.x <= 4.0f) && 
+                (currPos.z >= 2.0f && currPos.z <= 8.0f) &&
+                (currPos.y < 10.0f && currPos.y > 1.5f)){                
                 f.z = -m * -windForce;  //Wind from the windmill blends
-                f.y = -m * -windForce+10.0f;
-                
-                
+                f.y = -m * windForce+10.0f;
+            
             }
         }
     }
@@ -85,6 +84,7 @@ public class Particle : MonoBehaviour
             }else{
                 f.y = -m * g;
                 f.x = -m * 2.5f; //Wind from the ambiente
+                GoneByTheWind(Blade.windForce);
                 if (currPos.y != prevPos.y){
                     Vector3 vel = (currPos - prevPos) / Time.deltaTime;
                     if(currPos.y > prevPos.y){
@@ -102,7 +102,7 @@ public class Particle : MonoBehaviour
                 prevPos = temp;
                 CheckFloor();
                 
-                GoneByTheWind(Blade.windForce);
+                
                 
                 //CheckOnWindMill();
                 if(hasBounce){

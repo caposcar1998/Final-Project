@@ -12,7 +12,7 @@ Manuel Ortiz Hernández
 public class Blade : MonoBehaviour
 {
     float angleZ = 0;
-    float dz = 4.5f;
+    float dz = 10.0f;
 
     public static float windForce;
     Vector3[] originalPoints;
@@ -93,7 +93,7 @@ public class Blade : MonoBehaviour
     {
         
         if(!isPaused){
-            windForce = 60.0f;
+            windForce = dz*4;
             angleZ += dz;
             GameObject bladeOne = GameObject.Find("default1");
             MeshFilter mf = bladeOne.GetComponent<MeshFilter>();
