@@ -39,7 +39,7 @@ public class Emitter : MonoBehaviour
         pScript.color = materialColors;
         pScript.g = 9.81f;
         pScript.m = pScript.r * 2.0f;
-        pScript.currPos = new Vector3(Random.Range(-10.0f, 20.0f), Random.Range(20.0f, 32.0f), Random.Range(-10.0f, 10.0f));
+        pScript.currPos = new Vector3(Random.Range(-10.0f, 20.0f), Random.Range(15.0f, 20.0f), Random.Range(-10.0f, 10.0f));
         pScript.restitution = 0.9f; 
         pScript.f = Vector3.zero;
         pScript.f.y = -pScript.m * pScript.g;
@@ -68,7 +68,7 @@ public class Emitter : MonoBehaviour
     }
     void Recycle(Particle pScript){
         pScript.hasStoped = false;
-        pScript.currPos = new Vector3(Random.Range(-20.0f, 20.0f), Random.Range(15.0f, 35.0f), Random.Range(-10.0f, 10.0f));
+        pScript.currPos = new Vector3(Random.Range(-20.0f, 20.0f), Random.Range(15.0f, 20.0f), Random.Range(-10.0f, 10.0f));
         pScript.f = Vector3.zero;
         pScript.prevPos = pScript.currPos;
         

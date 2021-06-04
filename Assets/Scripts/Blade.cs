@@ -13,13 +13,15 @@ public class Blade : MonoBehaviour
 {
     float angleZ = 0;
     float dz = 4.5f;
+
+    public static float windForce;
     Vector3[] originalPoints;
     Vector3[] originalPoints2;
     Vector3[] originalPoints3;
     Vector3[] originalPoints4;
     Vector3[] originalPoints5;
 
-    bool isPaused = false;
+    bool isPaused;
 
     Vector3[] TransformBlade(Vector3[] input, Matrix4x4 r)
     {
@@ -27,7 +29,7 @@ public class Blade : MonoBehaviour
         Matrix4x4 t = Transformations.TranslateM(0, 5.45f, 1.8f);
         Matrix4x4 rotateX = Transformations.RotateM(180, Transformations.AXIS.AX_X);
         Matrix4x4 tLeft = Transformations.TranslateM(2.5f, 0, 0);
-
+        
         for (int i = 0; i < input.Length; i++)
         {
             Vector4 temp = input[i];
@@ -58,6 +60,7 @@ public class Blade : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isPaused = false;
         GameObject bladeOne = GameObject.Find("default1");
         MeshFilter mf = bladeOne.GetComponent<MeshFilter>();
         originalPoints = mf.mesh.vertices;
@@ -81,11 +84,16 @@ public class Blade : MonoBehaviour
 
     }
 
+    public bool isWindmillPaused(){
+        return isPaused;
+    }
+
     // Update is called once per frame
     void Update()
     {
         
         if(!isPaused){
+            windForce = 60.0f;
             angleZ += dz;
             GameObject bladeOne = GameObject.Find("default1");
             MeshFilter mf = bladeOne.GetComponent<MeshFilter>();
@@ -112,6 +120,7 @@ public class Blade : MonoBehaviour
             if(isPaused){
                 isPaused = false;
             }else{
+                windForce = 0.0f;
                 isPaused = true;
             }
         }

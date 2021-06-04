@@ -16,7 +16,7 @@ public class Particle : MonoBehaviour
     public Vector3 color;
     public float wind;
 
-    public float bladesWind;
+    
 
     public bool hasStoped;
 
@@ -26,6 +26,8 @@ public class Particle : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
+
+        
     }
 
     void CheckFloor()
@@ -56,31 +58,25 @@ public class Particle : MonoBehaviour
         }
     }
 
-
-    void CheckOnWindMill(){
-        //Esas medidas raras son las medidas del molino, pero solo del molino aprox
-        //Mi idea era que cuando estuviera menor a sus medidas, se sabía
-        //que en ese momento se encontraba con el molino, pero valió pura barriga señor verga.
-        if(currPos.x < 3.199815f+r && currPos.z < 3.501239f+r && currPos.y < 6.929605f+r){
-            prevPos.y = currPos.y;
-            currPos.y = 6.929605f+r;
-            f.y = -f.y * restitution;
-            
-            prevPos.x = currPos.x;
-            currPos.x = 3.199815f+r;
-            f.x = -f.x * restitution;
-            
-            prevPos.z = currPos.z;
-            currPos.z = 3.501239f+r;
-            f.z = -f.z * restitution;
-            a = f / m;
+    void GoneByTheWind(float windForce){
+        if(windForce > 0.0f){
+            if((currPos.x >= -3.5f && currPos.x <= 3.5f) && 
+                (currPos.z >= 2.9f && currPos.z <= 10.0f) &&
+                currPos.y < 10.5f){                
+                f.z = -m * -windForce;  //Wind from the windmill blends
+                f.y = -m * -windForce+10.0f;
+                
+                
+            }
         }
-
     }
+    
+
 
     // Update is called once per frame
     void Update()
     {
+        
         if(!isPaused){
             if(Mathf.Abs(currPos.y - prevPos.y) < 0.00001f && Mathf.Abs(currPos.y - r) < 0.00001f){
                 currPos.y = r;
@@ -105,6 +101,9 @@ public class Particle : MonoBehaviour
                 currPos = 2 * currPos - prevPos + a * dt * dt; //Verlets
                 prevPos = temp;
                 CheckFloor();
+                
+                GoneByTheWind(Blade.windForce);
+                
                 //CheckOnWindMill();
                 if(hasBounce){
                     //Solo si se registra que la partícula haya tocado el suelo y rebotado
