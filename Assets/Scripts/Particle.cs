@@ -63,15 +63,14 @@ public class Particle : MonoBehaviour
         if(windForce > 0.0f){
             //Si la windForce es > 0.0f, quiere decir que tiene un valor porque el molino se mueve
             if((currPos.x >= -4.0f && currPos.x <= 4.0f) && 
-                (currPos.z >= 2.0f && currPos.z <= 8.0f) &&
+                (currPos.z > 1.8f && currPos.z <= 8.0f) &&
                 (currPos.y < 10f && currPos.y > 1.4f)){ 
                 //Estos son meramente rangos en los que tenemos establecidos las aspas
                 // en el eje x: está seteado en el origen +- las medidas de las aspas = 4.0f aprox
                 // en el eje y: está seteado en 5.5 aprox +- las medidas de las aspas = 4.0f aprox
                 // en el eje z: está seteado a partir de 2.8 aprox, el rango solo es un aproximado de hasta donde atacaría el viento del molino
                 f.z = -m * -windForce;  //La fuerza en z+, es decir, hacia enfrente del molino
-                // f.y = -m * windForce+10.0f; //La fuerza en y-, es decir, va bajando con más fuerza
-                f.x = -m * ambientWind-1.0f; //La fuerza normal que tiene el ambiente, pero reducido.
+                f.y = -m * -windForce+15.0f; //La fuerza en y-, es decir, va bajando con más fuerza
 
             }
         }
@@ -89,8 +88,8 @@ public class Particle : MonoBehaviour
                 prevPos.y = r;
                 f.y = 0;
             }else{
-                f.y = -m * g;
-                f.x = -m * ambientWind; //Wind from the ambiente
+                f.y = -m * g; //
+                f.x = -m * ambientWind; //Wind from the ambient
                 GoneByTheWind(Blade.windForce);
                 if (currPos.y != prevPos.y){
                     Vector3 vel = (currPos - prevPos) / Time.deltaTime;
