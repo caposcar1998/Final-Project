@@ -48,14 +48,14 @@ public class Particle : MonoBehaviour
     void CheckOneBounce(){
         //Después de un "pequeño" salto, queremos que se recicle
         if (currPos.y >= r+1.0f){
-            //hasStoped = true;
+            hasStoped = true;
             hasBounce = false;
             
         }
         //Esto hay que tratar de evitarlo
         //Si no se registra el salto, lo validamos conforme a la distancia que tenga en x
         if(currPos.x < -40.0f){
-           // hasStoped = true;
+           hasStoped = true;
             hasBounce = false;
         }
     }
