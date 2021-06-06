@@ -5,7 +5,7 @@ using UnityEngine;
 public class Emitter : MonoBehaviour
 {
     public GameObject ParticlePrefab; 
-    private int numParticles = 50;
+    private int numParticles = 500;
     private GameObject[] particles;
     private Vector3 initialPos;
 

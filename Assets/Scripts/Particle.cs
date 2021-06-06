@@ -48,14 +48,14 @@ public class Particle : MonoBehaviour
     void CheckOneBounce(){
         //Después de un "pequeño" salto, queremos que se recicle
         if (currPos.y >= r+1.0f){
-            hasStoped = true;
+            //hasStoped = true;
             hasBounce = false;
             
         }
         //Esto hay que tratar de evitarlo
         //Si no se registra el salto, lo validamos conforme a la distancia que tenga en x
         if(currPos.x < -40.0f){
-            hasStoped = true;
+           // hasStoped = true;
             hasBounce = false;
         }
     }
@@ -81,24 +81,24 @@ public class Particle : MonoBehaviour
     // 7.021523
     // 3.413705
     void CheckOnWindMill(){
-        if( ( (currPos.z < windmillBox.z/2-r) && (currPos.z > -windmillBox.z/2 + r)  ) && 
-            ( (currPos.y < windmillBox.y/2-r) && (currPos.y > -windmillBox.y/2 + r)  ) && 
-            ( (currPos.x < windmillBox.x/2-r) && (currPos.x > -windmillBox.x/2 + r)  )){
-            //Si entra a este if, quiere decir que encontró la torrecita
-            //Pared izq = z & y
+            // Toca Pared
             if( (currPos.z < windmillBox.z/2-r) && (currPos.z > -windmillBox.z/2 + r) && 
                 (currPos.y < windmillBox.y/2-r) && (currPos.y > -windmillBox.y/2 + r)){
                 //Registra como colisión la pared izq y rebota en -x.
                 prevPos.x = currPos.x;
-                currPos.x = r;
-                f.x = -f.x * restitution;
-                a = f / m;
+                a = new Vector3(0.1f, 0.1f, 0.1f);
+                Debug.Log("Particula " + num + " chocó en Pared IZQ");
+            }
+            //Toca Techo
+            if( (currPos.z < windmillBox.z/2-r) && (currPos.z > -windmillBox.z/2 + r) && 
+                (currPos.x < windmillBox.x/2-r) && (currPos.x > -windmillBox.x/2 + r) && 
+                (currPos.y < windmillBox.y-r) ){
+                //Registra como colisión la pared izq y rebota en -x.
+                prevPos.y = currPos.y;
+                a = new Vector3(0.1f, 0.1f, 0.1f);
                 Debug.Log("Particula " + num + " chocó en Pared IZQ");
             }
 
-
-            
-        }
 
     
     }

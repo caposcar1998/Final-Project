@@ -161,25 +161,25 @@ public class Blade : MonoBehaviour
             // g8.transform.localPosition = boxVertices[7];
 
             boxVertices = outputBox;
-            PrintBladesRectangles(Color.red);
+            //PrintBladesRectangles(Color.red);
             GameObject bladeTwo = GameObject.Find("default2");
             MeshFilter mf2 = bladeTwo.GetComponent<MeshFilter>();
             Matrix4x4 r2 = Transformations.RotateM(angleZ - 90.0f, Transformations.AXIS.AX_Z);
             mf2.mesh.vertices = TransformBlade(originalPoints2, r2);
             boxVertices = outputBox; 
-            PrintBladesRectangles(Color.white);
+           // PrintBladesRectangles(Color.white);
             GameObject bladeThree = GameObject.Find("default3");
             MeshFilter mf3 = bladeThree.GetComponent<MeshFilter>();
             Matrix4x4 r3 = Transformations.RotateM(angleZ - 180.0f, Transformations.AXIS.AX_Z);
             mf3.mesh.vertices = TransformBlade(originalPoints3, r3);
             boxVertices = outputBox;
-            PrintBladesRectangles(Color.blue);
+            //PrintBladesRectangles(Color.blue);
             GameObject bladeFour = GameObject.Find("default4");
             MeshFilter mf4 = bladeFour.GetComponent<MeshFilter>();
             Matrix4x4 r4 = Transformations.RotateM(angleZ - 270.0f, Transformations.AXIS.AX_Z);
             mf4.mesh.vertices = TransformBlade(originalPoints4, r4);
             boxVertices = outputBox;
-            PrintBladesRectangles(Color.black);
+            //PrintBladesRectangles(Color.black);
         }
 
         if(Input.GetKeyDown("space")){
