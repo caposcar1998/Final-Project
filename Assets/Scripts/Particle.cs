@@ -7,6 +7,8 @@ public class Particle : MonoBehaviour
     public float r;
     public float g;
     public float m;
+
+    public int num;
     public Vector3 f;
     public Vector3 a;
     public Vector3 prevPos;
@@ -16,7 +18,7 @@ public class Particle : MonoBehaviour
     public Vector3 color;
     public float ambientWind;
 
-    
+    Vector3 windmillBox = new Vector3(3.584942f, 7.021523f, 3.413705f);
 
     public bool hasStoped;
 
@@ -75,6 +77,31 @@ public class Particle : MonoBehaviour
             }
         }
     }
+    //3.584942
+    // 7.021523
+    // 3.413705
+    void CheckOnWindMill(){
+        if( ( (currPos.z < windmillBox.z/2-r) && (currPos.z > -windmillBox.z/2 + r)  ) && 
+            ( (currPos.y < windmillBox.y/2-r) && (currPos.y > -windmillBox.y/2 + r)  ) && 
+            ( (currPos.x < windmillBox.x/2-r) && (currPos.x > -windmillBox.x/2 + r)  )){
+            //Si entra a este if, quiere decir que encontró la torrecita
+            //Pared izq = z & y
+            if( (currPos.z < windmillBox.z/2-r) && (currPos.z > -windmillBox.z/2 + r) && 
+                (currPos.y < windmillBox.y/2-r) && (currPos.y > -windmillBox.y/2 + r)){
+                //Registra como colisión la pared izq y rebota en -x.
+                prevPos.x = currPos.x;
+                currPos.x = r;
+                f.x = -f.x * restitution;
+                a = f / m;
+                Debug.Log("Particula " + num + " chocó en Pared IZQ");
+            }
+
+
+            
+        }
+
+    
+    }
     
 
 
@@ -107,10 +134,7 @@ public class Particle : MonoBehaviour
                 currPos = 2 * currPos - prevPos + a * dt * dt; //Verlets
                 prevPos = temp;
                 CheckFloor();
-                
-                
-                
-                //CheckOnWindMill();
+                CheckOnWindMill();
                 if(hasBounce){
                     //Solo si se registra que la partícula haya tocado el suelo y rebotado
                     CheckOneBounce();

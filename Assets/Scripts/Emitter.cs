@@ -5,7 +5,7 @@ using UnityEngine;
 public class Emitter : MonoBehaviour
 {
     public GameObject ParticlePrefab; 
-    private int numParticles = 500;
+    private int numParticles = 50;
     private GameObject[] particles;
     private Vector3 initialPos;
 
@@ -35,6 +35,7 @@ public class Emitter : MonoBehaviour
         Color c = new Color(materialColors.x,materialColors.y, materialColors.z);
         Renderer rend = part.GetComponent<Renderer>();
         rend.material.SetColor("_Color", c);
+        pScript.num = p;
         particles[p] = part;
         pScript.color = materialColors;
         pScript.g = 9.81f;

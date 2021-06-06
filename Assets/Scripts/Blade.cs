@@ -16,6 +16,10 @@ public class Blade : MonoBehaviour
 
     public static float windForce;
 
+    //3.584942
+    // 7.021523
+    // 3.413705
+    
     Vector3 bladesRectangles = new Vector3(3.805398f/2f, 1.011605f/2f, 0.4801749f/2f);
     Vector3[] originalPoints;
     Vector3[] originalPoints2;
@@ -28,14 +32,6 @@ public class Blade : MonoBehaviour
 
     Vector3[] outputBox;
 
-    public GameObject g1;
-    public GameObject g2;
-    public GameObject g3;
-    public GameObject g4;
-    public GameObject g5;
-    public GameObject g6;
-    public GameObject g7;
-    public GameObject g8;
 
     bool isPaused;
 
@@ -43,7 +39,7 @@ public class Blade : MonoBehaviour
     {
         Vector3[] output = new Vector3[input.Length];
         outputBox = new Vector3[boxVertices.Length];
-        Matrix4x4 t = Transformations.TranslateM(0, 5.45f, 1.8f);
+        Matrix4x4 t = Transformations.TranslateM(0, 4.65f, 1.8f);
         Matrix4x4 rotateX = Transformations.RotateM(180, Transformations.AXIS.AX_X);
         Matrix4x4 tLeft = Transformations.TranslateM(2.5f, 0, 0);
 
@@ -72,7 +68,7 @@ public class Blade : MonoBehaviour
     Vector3[] TransformWindmill(Vector3[] input)
     {
         Vector3[] output = new Vector3[input.Length];
-        Matrix4x4 t = Transformations.TranslateM(0, 0.8f, 0);
+        Matrix4x4 t = Transformations.TranslateM(0, 0.0f, 0);
 
         for (int i = 0; i < input.Length; i++)
         {
@@ -143,7 +139,8 @@ public class Blade : MonoBehaviour
     {
         
         if(!isPaused){
-            windForce = dz*4; 
+            // windForce = dz*4; 
+            windForce = 0.0f; 
             angleZ += dz;
             GameObject bladeOne = GameObject.Find("default1");
             MeshFilter mf = bladeOne.GetComponent<MeshFilter>();
