@@ -28,7 +28,7 @@ public class Emitter : MonoBehaviour
     }
 
     void CreateParticle(int p, GameObject part, Particle pScript){
-        float diam = 0.3f;
+        float diam = 0.2f;
         pScript.r = diam/2.0f;
         part.transform.localScale = new Vector3(diam, diam, diam);
         Vector3 materialColors = new Vector3(0,0, 0.4f);
@@ -45,7 +45,7 @@ public class Emitter : MonoBehaviour
         pScript.f = Vector3.zero;
         pScript.f.y = -pScript.m * pScript.g;
         pScript.f.x += Random.Range(-1.0f, 1.0f);
-        pScript.f.y += Random.Range(0, 5f);
+        pScript.f.y += 5f;
         pScript.f.z += Random.Range(-1.0f, 1.0f);
         pScript.prevPos = pScript.currPos;
     }

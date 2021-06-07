@@ -32,12 +32,12 @@ public class Particle : MonoBehaviour
     }
 
     void CheckFloor()
-    {
-        if (currPos.y < r)
-        {
+    {   
+        if (currPos.y <= r){
+            Debug.Log("Particula " + num + " ha tocado el suelo");
             prevPos.y = currPos.y;
             currPos.y = r ;
-            f.y = -f.y * restitution;
+            f.y = -m *  g * 0.4f;
             a = f / m;
             hasBounce = true;
             //Esto quiere decir que toca el suelo, por lo tanto hay rebote ajua    
@@ -46,8 +46,11 @@ public class Particle : MonoBehaviour
     }
 
     void CheckOneBounce(){
+        
         //Después de un "pequeño" salto, queremos que se recicle
+
         if (currPos.y >= r+0.01){
+
             hasStoped = true;
             hasBounce = false;
             
@@ -87,8 +90,7 @@ public class Particle : MonoBehaviour
                 //Registra como colisión la pared izq y rebota en -x.
                 prevPos.x = currPos.x;
                 a = new Vector3(0.1f, 0.1f, 0.1f);
-                Debug.Log("Particula " + num + " chocó en Pared IZQ");
- 
+
             }
             //Toca Techo
             if( (currPos.z < windmillBox.z/2-r) && (currPos.z > -windmillBox.z/2 + r) && 
@@ -97,7 +99,6 @@ public class Particle : MonoBehaviour
                 //Registra como colisión la pared izq y rebota en -x.
                 prevPos.y = currPos.y;
                 a = new Vector3(0.1f, 0.1f, 0.1f);
-                Debug.Log("Particula " + num + " chocó en Pared IZQ");
 
             }
 
@@ -115,7 +116,6 @@ public class Particle : MonoBehaviour
             if(Mathf.Abs(currPos.y - prevPos.y) < 0.00001f && Mathf.Abs(currPos.y - r) < 0.00001f){
                 currPos.y = r;
                 prevPos.y = r;
-                f.y = 0;
             }else{
                 f.y = -m * g; //
                 f.x = -m * ambientWind; //Wind from the ambient
