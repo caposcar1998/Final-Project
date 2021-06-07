@@ -48,8 +48,9 @@ public class Particle : MonoBehaviour
     void CheckOneBounce(){
         
         //Después de un "pequeño" salto, queremos que se recicle
-        if (currPos.y >= r+0.1){
-            Debug.Log("Particula " + num + " está rebotando");
+
+        if (currPos.y >= r+0.01){
+
             hasStoped = true;
             hasBounce = false;
             
@@ -89,6 +90,7 @@ public class Particle : MonoBehaviour
                 //Registra como colisión la pared izq y rebota en -x.
                 prevPos.x = currPos.x;
                 a = new Vector3(0.1f, 0.1f, 0.1f);
+
             }
             //Toca Techo
             if( (currPos.z < windmillBox.z/2-r) && (currPos.z > -windmillBox.z/2 + r) && 
@@ -97,6 +99,7 @@ public class Particle : MonoBehaviour
                 //Registra como colisión la pared izq y rebota en -x.
                 prevPos.y = currPos.y;
                 a = new Vector3(0.1f, 0.1f, 0.1f);
+
             }
 
 
