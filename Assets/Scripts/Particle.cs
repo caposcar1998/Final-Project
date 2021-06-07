@@ -18,7 +18,7 @@ public class Particle : MonoBehaviour
     public Vector3 color;
     public float ambientWind;
 
-    Vector3 windmillBox = new Vector3(3.584942f, 7.021523f, 3.413705f);
+    Vector3 windmillBox = new Vector3(3.584942f, 6.921523f, 3.413705f);
 
     public bool hasStoped;
 
@@ -28,7 +28,7 @@ public class Particle : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
-        ambientWind = 2.5f;
+        ambientWind = 8.0f;
     }
 
     void CheckFloor()
@@ -75,7 +75,8 @@ public class Particle : MonoBehaviour
                 // en el eje y: está seteado en 5.5 aprox +- las medidas de las aspas = 4.0f aprox
                 // en el eje z: está seteado a partir de 2.8 aprox, el rango solo es un aproximado de hasta donde atacaría el viento del molino
                 f.z = -m * -windForce;  //La fuerza en z+, es decir, hacia enfrente del molino
-                f.y = -m * -windForce+15.0f; //La fuerza en y-, es decir, va bajando con más fuerza
+                f.x = 1.0f;
+                f.y = -m * -windForce-2.5f; //La fuerza en y-, es decir, va bajando con más fuerza
 
             }
         }

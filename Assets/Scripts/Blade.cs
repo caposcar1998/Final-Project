@@ -140,25 +140,12 @@ public class Blade : MonoBehaviour
         
         if(!isPaused){
             // windForce = dz*4; 
-            windForce = 0.0f; 
+            windForce = dz*4.0f; 
             angleZ += dz;
             GameObject bladeOne = GameObject.Find("default1");
             MeshFilter mf = bladeOne.GetComponent<MeshFilter>();
             Matrix4x4 r = Transformations.RotateM(angleZ, Transformations.AXIS.AX_Z);
             mf.mesh.vertices = TransformBlade(originalPoints, r);
-            
-            // for(int i = 0; i < 8; i++){
-            //     boxVertices[i] = bladeOne.transform.position * 3.81f;
-            // }
-
-            // g1.transform.localPosition = boxVertices[0];
-            // g2.transform.localPosition = boxVertices[1];
-            // g3.transform.localPosition = boxVertices[2];
-            // g4.transform.localPosition = boxVertices[3];
-            // g5.transform.localPosition = boxVertices[4];
-            // g6.transform.localPosition = boxVertices[5];
-            // g7.transform.localPosition = boxVertices[6];
-            // g8.transform.localPosition = boxVertices[7];
 
             boxVertices = outputBox;
             //PrintBladesRectangles(Color.red);

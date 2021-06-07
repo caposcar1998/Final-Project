@@ -40,7 +40,7 @@ public class Emitter : MonoBehaviour
         pScript.color = materialColors;
         pScript.g = 9.81f;
         pScript.m = pScript.r * 2.0f; //0.4
-        pScript.currPos = new Vector3(Random.Range(-10.0f, 20.0f), Random.Range(15.0f, 20.0f), Random.Range(-10.0f, 10.0f));
+        pScript.currPos = new Vector3(Random.Range(5.0f, 20.0f), Random.Range(15.0f, 20.0f), Random.Range(-5.0f, 8.0f));
         pScript.restitution = 0.9f; 
         pScript.f = Vector3.zero;
         pScript.f.y = -pScript.m * pScript.g;
@@ -52,11 +52,6 @@ public class Emitter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //En el start se crean 500 particulas con la misma información
-        //En el update, nos fijamos que la bandera hasStoped sea true (osea que choque con el suelo y
-        // rebote una vez)
-        //Si es el caso, "reciclamos" esa particula y la seteamos
-        //en su posición inicial donde se generan las particulas
         
         foreach(GameObject p in particles){
             Particle pScript = p.GetComponent<Particle>();
@@ -69,7 +64,7 @@ public class Emitter : MonoBehaviour
     }
     void Recycle(Particle pScript){
         pScript.hasStoped = false;
-        pScript.currPos = new Vector3(Random.Range(-20.0f, 20.0f), Random.Range(15.0f, 20.0f), Random.Range(-10.0f, 10.0f));
+        pScript.currPos = new Vector3(Random.Range(5.0f, 20.0f), Random.Range(15.0f, 20.0f), Random.Range(-5.0f, 8.0f));
         pScript.f = Vector3.zero;
         pScript.prevPos = pScript.currPos;
         
