@@ -81,15 +81,7 @@ public class Blade : MonoBehaviour
 
     }
 
-    void PrintBladesRectangles(Color color){
-        Debug.DrawLine(boxVertices[0], boxVertices[1], color);
-        Debug.DrawLine(boxVertices[1], boxVertices[2], color);
-        Debug.DrawLine(boxVertices[2], boxVertices[3], color);
-        Debug.DrawLine(boxVertices[3], boxVertices[4], color);
-        Debug.DrawLine(boxVertices[4], boxVertices[5], color);
-        Debug.DrawLine(boxVertices[5], boxVertices[6], color);
-        Debug.DrawLine(boxVertices[6], boxVertices[7], color);
-    }
+
 
 
     // Start is called before the first frame update

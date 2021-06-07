@@ -34,7 +34,6 @@ public class Particle : MonoBehaviour
     void CheckFloor()
     {   
         if (currPos.y <= r){
-            Debug.Log("Particula " + num + " ha tocado el suelo");
             prevPos.y = currPos.y;
             currPos.y = r ;
             f.y = -m *  g * 0.4f;
